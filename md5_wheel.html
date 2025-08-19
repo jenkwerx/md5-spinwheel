@@ -202,7 +202,9 @@
             padding: 40px;
             border-radius: 15px;
             text-align: center;
-            max-width: 500px;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
@@ -246,12 +248,134 @@
             animation: explode 1s ease-out;
         }
 
+        /* Jackpot Slot Machine Styles */
+        .jackpot-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 15px;
+            border: 3px solid #B8860B;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .jackpot-title {
+            font-size: 1.8em;
+            color: #8B4513;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: bold;
+        }
+
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .slot-reel {
+            width: 80px;
+            height: 100px;
+            background: linear-gradient(180deg, #2C2C2C, #1C1C1C);
+            border: 4px solid #444;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slot-letter {
+            font-size: 3em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            font-family: 'Courier New', monospace;
+            border: 3px solid #fff;
+            border-radius: 8px;
+            padding: 5px 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Letter colors with contrasting backgrounds */
+        .slot-letter.letter-A { 
+            color: #FFD700; 
+            background: linear-gradient(145deg, #6637, #331);
+        } /* Yellow on dark */
+        .slot-letter.letter-B { 
+            color: #d27Bd2; 
+            background: linear-gradient(145deg, #402050, #200010);
+        } /* Purple on light */
+        .slot-letter.letter-C { 
+            color: #CC5500; 
+            background: linear-gradient(145deg, #ffdd030, #996600);
+        } /* Burnt Orange on light */
+        .slot-letter.letter-D { 
+            color: #000066; 
+            background: linear-gradient(145deg, #ccccff, #9999cc);
+        } /* Dark Blue on light */
+        .slot-letter.letter-E { 
+            color: #660000; 
+            background: linear-gradient(145deg, #f0d0d0, #a0b0b0);
+        } /* Maroon on light */
+        .slot-letter.letter-F { 
+            color: #006400; 
+            background: linear-gradient(145deg, #99ff99, #77dd77);
+        } /* Dark Green on light */
+        .slot-letter.letter-G { 
+            color: #333333; 
+            background: linear-gradient(145deg, #ffffff, #cccccc);
+        } /* Grey on light */
+
+        .slot-reel.spinning .slot-letter {
+            animation: slotSpin 2s ease-out;
+            opacity: 0; /* Hide letters during spin */
+            visibility: hidden; /* Extra hiding to prevent any flashing */
+        }
+
+        .jackpot-result {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .jackpot-win {
+            background: linear-gradient(45deg, #32CD32, #228B22);
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .jackpot-lose {
+            background: linear-gradient(45deg, #DC143C, #B22222);
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .jackpot-empty {
+            background: linear-gradient(45deg, #DC14DC, #822282);
+            color: yellow;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
         /* Hide elements during spin */
         .hidden-during-spin {
             transition: opacity 0.3s ease;
         }
 
         .hidden-during-spin.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Hide elements during jackpot */
+        .hidden-during-jackpot {
+            transition: opacity 0.3s ease;
+        }
+
+        .hidden-during-jackpot.hide {
             opacity: 0;
             pointer-events: none;
         }
@@ -318,6 +442,12 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        @keyframes slotSpin {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-200px); }
+            100% { transform: translateY(0px); }
         }
 
         .spinning {
@@ -436,6 +566,28 @@
                 font-size: 2em;
                 margin: 15px 0;
             }
+
+            /* Mobile jackpot styles */
+            .jackpot-title {
+                font-size: 1.4em;
+            }
+
+            .slot-machine {
+                gap: 10px;
+            }
+
+            .slot-reel {
+                width: 60px;
+                height: 80px;
+            }
+
+            .slot-letter {
+                font-size: 2.2em;
+            }
+
+            .jackpot-result {
+                font-size: 1.1em;
+            }
         }
 
         @media (max-width: 480px) {
@@ -463,6 +615,15 @@
             .winner-name {
                 font-size: 1.8em;
             }
+
+            .slot-reel {
+                width: 50px;
+                height: 70px;
+            }
+
+            .slot-letter {
+                font-size: 1.8em;
+            }
         }
     </style>
 </head>
@@ -472,7 +633,7 @@
 
         
         <div class="controls">
-            <div class="text-section hidden-during-spin">
+            <div class="text-section hidden-during-spin hidden-during-jackpot">
                 <h3>Enter Items (one per line):</h3>
                 <textarea id="entriesText" placeholder="Apple&#10;Banana&#10;Orange&#10;Grape&#10;Strawberry&#10;Pineapple"></textarea>
                 <div class="button-group">
@@ -492,12 +653,12 @@
             </div>
         </div>
         
-        <div class="salt-section hidden-during-spin">
+        <div class="salt-section hidden-during-spin hidden-during-jackpot">
             <h3>Salt (Timestamp):</h3>
             <div id="saltDisplay"></div>
         </div>
 
-        <div class="audit-section hidden-during-spin">
+        <div class="audit-section hidden-during-spin hidden-during-jackpot">
             <div style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; font-family: monospace; font-size: 12px; text-align: left; border: 2px solid #e9ecef;">
                 <div style="margin-bottom: 8px; text-align: center;"><strong>Current Audit Information:</strong></div>
                 <div style="margin-bottom: 4px;"><strong>MD5 Hash:</strong> <span id="currentHash">-</span></div>
@@ -506,7 +667,7 @@
                     <button class="btn-secondary" onclick="window.open('https://www.md5hashgenerator.com/', '_blank')">Test MD5 Hash</button>
                 </div>
 
-        <h1 class="hidden-during-spin">🔒 MD5 Spin Wheel 🔒</h1>
+        <h1 class="hidden-during-spin hidden-during-jackpot">🔒 MD5 Spin Wheel 🔒</h1>
             </div>
         </div>
     </div>
@@ -517,17 +678,34 @@
             <div class="winner-text">🎉 Congratulations! 🎉</div>
             <div class="winner-name" id="winnerName"></div>
             
-            <div style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; font-family: monospace; font-size: 12px; text-align: left;">
+            <!-- Jackpot Slot Machine Section -->
+            <div class="jackpot-section" id="jackpotSection">
+                <div class="jackpot-title">🎰 BONUS JACKPOT 🎰</div>
+                <div class="slot-machine">
+                    <div class="slot-reel" id="reel1">
+                        <div class="slot-letter letter-A" id="letter1">A</div>
+                    </div>
+                    <div class="slot-reel" id="reel2">
+                        <div class="slot-letter letter-A" id="letter2">A</div>
+                    </div>
+                    <div class="slot-reel" id="reel3">
+                        <div class="slot-letter letter-A" id="letter3">A</div>
+                    </div>
+                </div>
+                <div class="jackpot-result hidden-during-jackpot" id="jackpotResult"></div>
+            </div>
+            
+            <div style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; font-family: monospace; font-size: 12px; text-align: left;" class="hidden-during-jackpot">
                 <div style="margin-bottom: 8px;"><strong>Audit Information:</strong></div>
                 <div style="margin-bottom: 4px;"><strong>MD5 Hash:</strong> <span id="winnerHash"></span></div>
                 <div style="margin-bottom: 4px;"><strong>Combined Value:</strong> <span id="winnerCombined"></span></div>
             </div>
             
-            <div class="checkbox-container">
+            <div class="checkbox-container hidden-during-jackpot">
                 <input type="checkbox" id="removeWinner">
                 <label for="removeWinner">Remove winner from wheel</label>
             </div>
-            <button class="btn-primary" onclick="closeWinnerModal()">Close & Spin Again!</button>
+            <button class="btn-primary hidden-during-jackpot" onclick="closeWinnerModal()">Close & Spin Again!</button>
         </div>
 		<div style='visibility:hidden;' id='divspin'>0</div>
 
@@ -537,6 +715,7 @@
         let entries = ['Apple', 'Banana', 'Orange', 'Grape', 'Strawberry', 'Pineapple'];
         let removedEntries = new Set(); // Track removed entries
         let isSpinning = false;
+        let isJackpotRunning = false; // Track jackpot state
         let currentRotation = 0;
         let currentSalt = '';
 
@@ -599,6 +778,22 @@
             // Collapse the wheel section back to normal
             const wheelSection = document.querySelector('.wheel-section');
             wheelSection.classList.remove('expanded');
+        }
+
+        // Function to hide elements during jackpot
+        function hideElementsDuringJackpot() {
+            const elementsToHide = document.querySelectorAll('.hidden-during-jackpot');
+            elementsToHide.forEach(element => {
+                element.classList.add('hide');
+            });
+        }
+
+        // Function to show elements after jackpot
+        function showElementsAfterJackpot() {
+            const elementsToHide = document.querySelectorAll('.hidden-during-jackpot');
+            elementsToHide.forEach(element => {
+                element.classList.remove('hide');
+            });
         }
 
         // Correct MD5 implementation
@@ -800,6 +995,8 @@
 
         function removeDuplicates() {
             updateSaltOnAction();
+            // Clear removed entries so they can be readded
+            removedEntries.clear();
             const seen = new Set();
             entries = entries.filter(entry => {
                 if (seen.has(entry.toLowerCase())) {
@@ -815,6 +1012,8 @@
 
         function sortEntries() {
             updateSaltOnAction();
+            // Clear removed entries so they can be readded
+            removedEntries.clear();
             entries.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
             updateTextFromEntries();
             drawWheel();
@@ -823,6 +1022,8 @@
 
         function randomizeEntries() {
             updateSaltOnAction();
+            // Clear removed entries so they can be readded
+            removedEntries.clear();
             for (let i = entries.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [entries[i], entries[j]] = [entries[j], entries[i]];
@@ -953,6 +1154,77 @@
             };
         }
 
+        // Jackpot functions
+        function hashCharToLetter(char) {
+            const mapping = {
+                '0': 'A', 'a': 'B',
+                '1': 'B', 'b': 'C',
+                '2': 'C', '3': 'C', 'c': 'D',
+                '4': 'D', '5': 'D', 'd': 'E',
+                '6': 'E', '7': 'E', 'e': 'F',
+                '8': 'F', 'f': 'G',
+                '9': 'G'
+            };
+            return mapping[char] || 'A';
+        }
+
+        function runJackpotSlotMachine(hash) {
+            isJackpotRunning = true;
+            hideElementsDuringJackpot();
+            jackpotResult.textContent = `... SPINNING ...`;
+            jackpotResult.className = 'jackpot-result jackpot-empty';
+
+
+            
+            const letter1 = hashCharToLetter(hash[0]);
+            const letter2 = hashCharToLetter(hash[1]);
+            const letter3 = hashCharToLetter(hash[2]);
+
+            // Start spinning animation
+            const reels = ['reel1', 'reel2', 'reel3'];
+            reels.forEach(reelId => {
+                document.getElementById(reelId).classList.add('spinning');
+            });
+
+            // Set final letters after animation
+            setTimeout(() => {
+                // Update letter content and color classes
+                const letter1Element = document.getElementById('letter1');
+                const letter2Element = document.getElementById('letter2');
+                const letter3Element = document.getElementById('letter3');
+                
+                // Remove old color classes
+                letter1Element.className = 'slot-letter letter-' + letter1;
+                letter2Element.className = 'slot-letter letter-' + letter2;
+                letter3Element.className = 'slot-letter letter-' + letter3;
+                
+                // Set new letters
+                letter1Element.textContent = letter1;
+                letter2Element.textContent = letter2;
+                letter3Element.textContent = letter3;
+
+                // Remove spinning animation
+                reels.forEach(reelId => {
+                    document.getElementById(reelId).classList.remove('spinning');
+                });
+
+                // Check if jackpot won
+                const jackpotResult = document.getElementById('jackpotResult');
+                if (letter1 === letter2 && letter2 === letter3) {
+                    jackpotResult.textContent = `🎉 JACKPOT! Triple ${letter1}'s! You won a bonus jackpot! 🎉`;
+                    jackpotResult.className = 'jackpot-result jackpot-win';
+                } else {
+                    jackpotResult.textContent = `${letter1} - ${letter2} - ${letter3} | No jackpot this time, but you still won the main prize!`;
+                    jackpotResult.className = 'jackpot-result jackpot-lose';
+
+                }
+
+                // Jackpot is finished, show elements again
+                isJackpotRunning = false;
+                showElementsAfterJackpot();
+            }, 2000);
+        }
+
 		function getCanvasRotationInDegrees(canvasId) {
 			const canvas = document.getElementById(canvasId);
 			if (!canvas) {
@@ -1049,6 +1321,10 @@
             document.getElementById('winnerCombined').textContent = combined;
             document.getElementById('removeWinner').checked = false;
             document.getElementById('winnerModal').style.display = 'block';
+            
+            // Run the jackpot slot machine
+            runJackpotSlotMachine(hash);
+            
             createFireworks();
         }
 
@@ -1064,7 +1340,7 @@
             
             modal.style.display = 'none';
             document.getElementById('fireworks').innerHTML = '';
-            
+	    hideElementsDuringJackpot();
             // Show elements again after closing the modal
             showElementsAfterSpin();
         }
@@ -1100,4 +1376,4 @@
     </script>
        
 </body>
-</html> 
+</html>
