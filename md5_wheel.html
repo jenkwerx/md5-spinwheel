@@ -1136,7 +1136,7 @@
             let winnerCombined = null;
 
             activeEntries.forEach(entry => {
-                const combined = currentSalt + entry;
+                const combined = (currentSalt + entry).toLowerCase();
                 const hash = md5(combined);
                 
                 if (lowestHash === null || hash < lowestHash) {
